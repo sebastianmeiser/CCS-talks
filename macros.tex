@@ -1,0 +1,420 @@
+%!TEX root = adaptive-gauss.tex
+
+
+\newcommand{\mathcmd}[1]{{\normalfont\ensuremath{#1}}\xspace}
+\newcommand{\mathvar}[1]{\mathcmd{\mathsf{#1}}}
+\newcommand{\mathstring}[1]{\mathcmd{\text{\texttt{#1}}}}
+\newcommand{\mathname}[1]{\mathcmd{\text{\textit{#1}}}}
+\newcommand{\mathalg}[1]{\mathcmd{\text{\textsc{#1}}}}
+\newcommand{\mathtext}[1]{\mathcmd{\text{#1}}}
+\newcommand{\mathvalue}[1]{\mathcmd{\mathit{#1}}}
+\newcommand{\mathentity}[1]{\mathcmd{\text{\textsc{#1}}}}
+\newcommand{\mathnamesc}[1]{\mathcmd{\textsc{#1}}}
+\newcommand{\mathlabel}[1]{\mathcmd{\textsf{#1}}}
+\newcommand{\mathset}[1]{\mathname{#1}}
+
+
+
+%%%% Bucket stuff
+
+\newcommand{\rescalename}{squaring\xspace}
+\newcommand{\rescalenode}{\rescalename node\xspace}
+\newcommand{\rescalenodes}{\rescalename nodes\xspace}
+\newcommand{\squaringnode}{\rescalenode}
+\newcommand{\squaringnodes}{\rescalenodes}
+% \newcommand{\rescale}{\mathcmd{\text{\normalfont\textreferencemark}}}
+\newcommand{\rescale}{\mathcmd{\dagger}}
+%\newcommand{\square}{\rescale}
+\newcommand{\prodA}{{\normalfont\textbf{\underline A}}}
+\newcommand{\prodB}{{\normalfont\textbf{\underline B}}}
+\newcommand{\fakeB}{\widetilde{\text{PrB}}}
+
+\newcommand{\comp}{\ensuremath{T}\xspace}
+\newcommand{\compprodA}{\mathcmd{T^{\prodA}}}
+\newcommand{\compprodB}{\mathcmd{T^{\prodB}}}
+
+\newcommand{\virtualerror}{\ensuremath{\tilde \ell}\xspace}
+\newcommand{\realerror}{\ensuremath{\ell}\xspace}
+\newcommand{\support}{\mathit{support}}
+
+\newcommand{\numdistributions}{\ensuremath{\mathcal W}\xspace}
+
+\newcommand{\bucketingtuplefull}[3]{(\buckets_{#1}, \virtualerror_{#1}, \realerror_{#1}, f_{#1}, {#3})}
+\newcommand{\bucketingtuple}[3]{\bucketingtuplefull{#1}{#2}{#3}}
+
+\newcommand{\indexstyle}{\iota}
+\newcommand{\indexA}[1]{\mathcmd{\indexstyle_{#1}}}
+\newcommand{\indexB}[1]{\mathcmd{\indexstyle_{#1}}}
+\newcommand{\deltaA}{\mathcmd{\delta_A}}
+\newcommand{\deltaB}{\mathcmd{\delta_B}}
+\newcommand{\deltaAA}[1]{\mathcmd{\delta^{#1}}}
+\newcommand{\deltaBB}[1]{\mathcmd{\delta^{#1}_B}}
+
+\newcommand{\kl}[2]{\ensuremath{\mathvar{D}_{\mathvar{KL}}\left(#1 {\mid\mid} #2 \right)}\xspace}
+
+
+%%%%% Laplace Buckets
+\newcommand{\rightBucketBorder}{\mathcmd{\text{rbb}}}
+\newcommand{\leftBucketBorder}{\mathcmd{\text{lbb}}}
+\newcommand{\granularity}{\mathcmd{\text{gr}}}
+
+%%%% Special Symbols
+
+\newcommand{\ppt}{\mathstring{ppt}\xspace}
+\newcommand{\indcdp}{\mathstring{IND}\text{-}\mathstring{ANO}\xspace}
+\newcommand{\eps}{\varepsilon}
+
+\newcommand{\attacker}{\mathcmd{\mathcal{A}}}
+\newcommand{\qu}{\mathcmd{\text{\textquotesingle}}}
+\newcommand{\singleQuoted}[1]{\mathcmd{\qu{}#1\qu}}
+\newcommand{\sq}[1]{\singleQuoted{#1}}
+\newcommand{\ot}{\leftarrow}
+\newcommand{\randfrom}{\ensuremath{\overset{\$}{\ot}}}
+\newcommand{\ctag}{\ensuremath{\Psi}}
+\newcommand{\state}{\ensuremath{\mathsf{s}}}
+
+\newcommand{\set}[1]{\ensuremath{\left\{ #1 \right\}}\xspace}
+\newcommand{\bits}{\set{0,1}}
+
+\newcommand{\pr}[1]{\ensuremath{\mathrm{Pr}\left [ #1\right ]}}
+\newcommand{\interact}[2]{\ensuremath{\left < #1 \middle | #2\right >}}
+
+\newcommand{\drawXfromY}[2]{\ensuremath{P_{#2}(#1)}}
+
+\newcommand{\new}{\mathstring{new }\xspace}
+
+\newcommand{\setto}{\texttt{ := }}
+\newcommand{\pluseq}{\texttt{ += }}
+\newcommand{\pluseqnormal}{\ensuremath{\mathrel{+}=}\xspace}
+
+%%%% Constants
+
+\newcommand{\landingPointRadius}{500\xspace}
+
+%%%% LaTeX names
+
+\newcommand{\Laplace}{\text{LP}}
+\newcommand{\LP}{\Laplace}
+\newcommand{\Gauss}{\text{GS}}
+\newcommand{\GS}{\Gauss}
+
+\newcommand{\noisenewtiny}{\ensuremath{\text{new}_1}\xspace}
+\newcommand{\noisenew}{\ensuremath{\text{new}_2}\xspace}
+\newcommand{\noiselow}{low\xspace}
+\newcommand{\noisemedium}{medium\xspace}
+\newcommand{\noisehigh}{high\xspace}
+
+% Measuring Anonymity against Network-level adversaries in Tor in Compromised Realms
+\newcommand{\AnoAplain}{AnoA}
+\newcommand{\AnoA}{{\normalfont \AnoAplain}\xspace}
+
+\newcommand{\toolnameplain}{SPIDER\xspace}
+% \newcommand{\toolnameplain}{MANTICOR\xspace}
+\newcommand{\toolname}{\textsc{\MakeLowercase{\toolnameplain}}\xspace}
+
+\newcommand{\ul}[1]{\underline{#1}}
+
+
+%%%% Adversaries, Challengers and the like
+
+\newcommand{\chal}{\ensuremath{\mathstring{Ch}}\xspace}
+
+\newcommand{\simulator}{\ensuremath{\mathstring{S}}\xspace}
+\newcommand{\simindex}{\ensuremath{\mathlabel{z}}\xspace}
+
+\newcommand{\adv}{\ensuremath{\mathcal A}\xspace}
+\newcommand{\maliciousInfrastructure}{\ensuremath{\mathcal{MI}}\xspace}
+\newcommand{\MI}{\maliciousInfrastructure}
+\newcommand{\bdv}{\ensuremath{\mathcal B}\xspace}
+
+\newcommand{\adversaries}{\ensuremath{A}\xspace}
+\newcommand{\advOb}{\ensuremath{\mathalg{advBetween}}\xspace}
+\newcommand{\advObx}[1]{\ensuremath{\advOb(#1,\compromisedASes)}\xspace}
+
+\newcommand{\sender}{S\xspace}
+\newcommand{\recipient}{R\xspace}
+\newcommand{\session}{\mathstring{session}\xspace}
+\newcommand{\knowntags}{T\xspace}
+
+
+%%%% Math Strings
+
+\newcommand{\stringCorruptNode}{\mathstring{Corrupt node}\xspace}
+\newcommand{\stringCorruptLink}{\mathstring{Corrupt link}\xspace}
+
+\newcommand{\stringInit}{\mathstring{Initialize}\xspace}
+\newcommand{\stringInput}{\mathstring{Input}\xspace}
+\newcommand{\stringChallenge}{\mathstring{Challenge}\xspace}
+\newcommand{\stringAnswerFor}{\mathstring{Answer\ for}\xspace}
+
+\newcommand{\stringDontSimulate}{\mathstring{don't simulate}\xspace}
+\newcommand{\stringSimulate}{\mathstring{simulate}\xspace}
+
+\newcommand{\stringFresh}{\mathstring{fresh}\xspace}
+
+%%%% Sets
+\newcommand{\compromisedASes}{\MI}
+\newcommand{\nodes}{\ensuremath{\mathcal N}\xspace}
+\newcommand{\senders}{\ensuremath{\mathcal S}\xspace}
+\newcommand{\users}{\senders}
+\newcommand{\recipients}{\ensuremath{\mathcal R}\xspace}
+\newcommand{\destinations}{\recipients}
+
+\newcommand{\universe}{\ensuremath{\mathcal U}\xspace}
+\newcommand{\buckets}{\ensuremath{\mathcal B}\xspace}
+
+
+%%%% Algorithms
+
+\newcommand{\ComputeDeltas}{\mathalg{ComputeAnonymity}}
+\newcommand{\Obs}{\ensuremath{\mathit{Obs}}\xspace}
+\newcommand{\Phase}{\mathalg{Phase}}
+\newcommand{\ObservationPhase}{\mathalg{ObservationPhase}}
+\newcommand{\DeductionPhase}{\mathalg{DeductionPhase}}
+\newcommand{\observed}{\mathalg{obvd}}
+
+\newcommand{\TorPS}{\mathalg{PS}\xspace}
+% \newcommand{\TorPS}{\mathalg{TorPS}\xspace}
+
+\newcommand{\ComputeProbs}{\mathalg{ComputeProbs}}
+\newcommand{\AddDifference}{\mathalg{AddDiff}}
+% \newcommand{\CircuitProbability}{\mathalg{CP}}
+\newcommand{\circuitProbability}{\mathalg{cp}}
+
+%%%% Datastructures & Variables
+
+\newcommand{\mega}{\ensuremath{\mathstring{store}}\xspace}
+\newcommand{\exitDestinationProb}{\mathvar{edPr}}
+\newcommand{\senderEntryProb}{\mathvar{sgPr}}
+\newcommand{\entryMiddleProb}{\mathvar{emPr}}
+\newcommand{\middleExitProb}{\mathvar{mePr}}
+\newcommand{\tmpexd}{\mathvar{tmpexd}}
+\newcommand{\values}{\mathvar{values}}
+\newcommand{\senderDist}{\mathvar{senDist}}
+\newcommand{\destinationPortDist}{\mathvar{destDist}}
+\newcommand{\counter}{\mathvar{counter}}
+
+%%%% Labels
+
+\newcommand{\en}{\mathlabel{en}}
+\newcommand{\ex}{\mathlabel{ex}}
+\newcommand{\mi}{\mathlabel{mi}}
+
+\newcommand{\ps}[1]{\mathalg{P}_{{#1}}}
+
+\newcommand{\observationlabel}[1]{\mathentity{#1}}
+\newcommand{\AG}{\observationlabel{AG}}
+\newcommand{\BG}{\observationlabel{BG}}
+\newcommand{\GM}{\observationlabel{GM}}
+\newcommand{\MX}{\observationlabel{MX}}
+\newcommand{\XONE}{\observationlabel{X1}}
+\newcommand{\XTWO}{\observationlabel{X2}}
+
+\newcommand{\SAONE}{\mathalg{SA1}}
+\newcommand{\SATWO}{\mathalg{SA2}}
+\newcommand{\RAONE}{\mathalg{RA1}}
+\newcommand{\RATWO}{\mathalg{RA2}}
+\newcommand{\RELAONE}{\mathalg{RELA1}}
+\newcommand{\RELATWO}{\mathalg{RELA2}}
+
+\newcommand{\SR}[2]{\ensuremath{\sender_{#1}\mathrm{-}\recipient_{#2}}}
+%%%% Nodes
+
+\newcommand{\node}{\mathvar{n}}
+\newcommand{\exitNode}{\mathvar{n_{X}}}
+\newcommand{\entryNode}{\mathvar{n_{G}}}
+\newcommand{\middleNode}{\mathvar{n_{M}}}
+
+%%%% Anonymity Functions
+\newcommand{\SA}{\mathname{SA}}
+\newcommand{\RA}{\mathname{RA}}
+\newcommand{\REL}{\mathname{REL}}
+\newcommand{\ano}{\ensuremath{\alpha}\xspace}
+\newcommand{\anoSA}{\mathcmd{\ano_{\SA}}}
+\newcommand{\anoRA}{\mathcmd{\ano_{\RA}}}
+\newcommand{\anoREL}{\mathcmd{\ano_{\REL}}}
+
+%%%% Comments
+\usepackage[normalem]{ulem}
+\usepackage{color,pdfcolmk}
+\newcommand{\TODO}[1]{\ifdraft\textcolor{red}{TODO: #1}\fi}
+\newcommand{\FIXME}[1]{\textcolor{red}{\uwave{#1}}}
+\newcommand{\cro}[1]{\ifdraft\textcolor{blue}{CR: #1}\fi}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Environments 
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\pparagraph}[1]{\paragraph{#1}}
+% \newcommand{\pparagraph}[1]{\par \smallskip\noindent\textbf{#1.}}
+
+
+
+
+
+\newcommand{\algP}{\ensuremath{\mathalg{P}}\xspace}
+\newcommand{\algT}{\ensuremath{T}\xspace}
+
+
+\newcommand{\PN}{\ensuremath{\mathvar{p}}\xspace}
+\newcommand{\TN}{\ensuremath{\mathvar{t}}\xspace}
+
+\newcommand{\PMax}{\ensuremath{\PN_\text{max}}\xspace}
+\newcommand{\TMax}{\ensuremath{\TN_\text{max}}\xspace}
+\newcommand{\PMin}{\ensuremath{\PN_\text{min}}\xspace}
+\newcommand{\TMin}{\ensuremath{\TN_\text{min}}\xspace}
+
+
+
+
+\newcommand{\messages}{\ensuremath{\mathcal M}\xspace}
+
+\newcommand{\eqdef}{\ensuremath{\text{=:}}\xspace}
+\newcommand{\defeq}{\ensuremath{\text{:=}}\xspace}
+
+\newcommand{\cscheme}{\ensuremath{\mathalg{C}}\xspace}
+\newcommand{\setup}{\ensuremath{\mathalg{Setup}}\xspace}
+\newcommand{\commit}{\ensuremath{\mathalg{Commit}}\xspace}
+\newcommand{\open}{\ensuremath{\mathalg{Open}}\xspace}
+
+\newcommand{\pp}{\ensuremath{\mathvar{pp}}\xspace}
+\newcommand{\com}{\ensuremath{\mathvar{c}}\xspace}
+\newcommand{\decom}{\ensuremath{\mathvar{o}}\xspace}
+\newcommand{\spar}{\ensuremath{\lambda}\xspace}
+
+
+
+\newcommand{\myif}{\ensuremath{\mathtext{\textbf{if }}}\xspace}
+\newcommand{\mythen}{\ensuremath{\mathtext{\textbf{then }}}\xspace}
+\newcommand{\myelse}{\ensuremath{\mathtext{\textbf{else }}}\xspace}
+\newcommand{\return}{\ensuremath{\mathtext{\textbf{return }}}\xspace}
+
+\newcommand{\weak}{\ensuremath{\mathalg{weak}}\xspace}
+
+
+\newcommand{\spacehack}{}
+\newcommand{\splitupsecure}{differentially secret in the split-up game}
+\newcommand{\splitupsecurity}{security of the split-up game}
+\newcommand{\combinedsecure}{differentially secret in the combined game}
+\newcommand{\combinedsecurity}{security of the combined game}
+
+\newcommand{\something}{differential privacy\xspace}
+\newcommand{\somethingable}{differentially private\xspace}
+
+
+
+
+% \newenvironment{framedFigure}[2]
+% {
+% \begin{figure*}[t]
+% \def\tmpCaption{#1}
+% \def\tmpLabel{#2}
+% \begin{framed}
+% }
+% {
+% %\vspace{-0.5em}
+% \end{framed}
+% %\vspace{-1em}
+% \caption{\tmpCaption}\label{\tmpLabel}
+% % \vspace{-0.5em}
+% \end{figure*}
+% }
+%
+% \newcommand{\codesize}{\scriptsize}
+% \newenvironment{code}[2]
+% {
+% \begin{framedFigure}{#1}{#2}
+% % \iffullversion
+% \begin{multicols}{2}
+% % \fi
+% % \begin{alltt}
+% \codesize
+% }
+% {
+% % \end{alltt}
+% % \iffullversion
+% \end{multicols}
+% % \fi
+% \end{framedFigure}
+% }
+%
+% \newenvironment{framedFigureSingle}[2]
+% {
+% \begin{figure}[t]
+% \def\tmpCaption{#1}
+% \def\tmpLabel{#2}
+% \begin{framed}
+% }
+% {
+% %\vspace{-0.5em}
+% \end{framed}
+% \vspace{-1em}
+% \caption{\tmpCaption}\label{\tmpLabel}
+% \vspace{-0.5em}
+% \end{figure}
+% }
+%
+% \newenvironment{codeSingle}[2]
+% {
+% \begin{framedFigureSingle}{#1}{#2}
+% \codesize
+% }
+% {
+% \end{framedFigureSingle}
+% }
+%
+% % \makeatletter
+% % \let\saved@includegraphics\includegraphics
+% % \let\saved@input\input
+% % \makeatother
+%
+% \newenvironment{imitate}[1]
+% {
+%
+% \medskip
+% \noindent\textbf{#1.}
+% \bgroup
+% \it
+% }
+% {
+% \egroup
+% }
+%
+% \newenvironment{imitateName}[2]
+% {
+%
+% \medskip
+% \noindent\textbf{#1.} (#2)
+% \bgroup
+% \it
+% }
+% {
+% \egroup
+% }
+%
+% \newenvironment{Claim}[1]
+% {
+% \begin{imitate}{Claim~{#1}}
+% }
+% {
+% \end{imitate}
+% }
+%
+% \newenvironment{claimproof}[1]
+% {
+%
+% \medskip
+% \noindent\textit{Proof of Claim~#1.}
+% \bgroup
+% }{
+% \hfill $\diamond$
+% \egroup
+%
+% \medskip
+% }
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 
