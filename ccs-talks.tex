@@ -161,6 +161,18 @@ They analyze how to distribute keys for an email structure that allows for encry
 They store all claims (of the form ``entity, key'') into an encrypted dictionary. To hide the indexes of the dictionary, they put a verifiable random function in there, i.e., some apparently random value; they communicate this value to people of interest. They then put a proof that they computed the VRF correctly into the encrypted part. They then chain these claims together with a hash chain. This basically is the ClaimChain that can be attached to emails.
 
 
+\section{WPES: What's a little leakage between friends? (Short)}
+\noindent\textbf{Speaker: Sebastian Angel}, collaboration with David Lazar, Ioanna Tzialla
+\noindent\textbf{Paper: \url{https://arxiv.org/abs/1809.00111}}
+
+Metadata-private messaging systems allow communication without leaking metadata to providers, servers or users not involved in the communication. In the simplest case, everyone sends packets to everyone else. Existing MPM systems avoid this broadcast by limiting the number of messages per round. Clients now have to start scheduling their own communication (and potentially wait until their messages are being sent). To actually communicate, you can have a dialing round in which you negotiate a communication round.
+
+They then analyze what happens if a malicious user tries to gain information about whether others are talking: the idea is that an adversary can ask a user whether they want to talk; since every user only has a limited number of (real) messages per round, they can see whether the user is ``free'' or ``already in conversation''. To counter this, they envision a private answering machine, that hides from callers whether or not a user is talking; moreover eventually a caller needs to get through and it should be efficient, i.e., the capacity of the answering machine should be significantly smaller than full broadcast. Their proposal has several limitations, including that everyone needs to have a max number of friends $m$; then statically map callers to rounds (mod $m$). Drawbacks are potential limitation and leakage of the number of friends and an increased latency (if the answering machine has low capacity or the user many friends).
+
+
+
+
+
 
 
 \bibliography{adp}
