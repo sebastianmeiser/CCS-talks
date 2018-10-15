@@ -134,6 +134,23 @@ If a change occurred, the analyst collects the changed estimates from the users 
 I’m not completely convinced yet by the proof intuition for why their mechanism satisfies differential privacy; a closer look into their paper~\footnote{available online: \url{https://arxiv.org/pdf/1802.07128.pdf}} might be in order to understand what exactly they are doing and why that is privacy-preserving, particularly towards the data analyst that collects the votes and combines the estimates.
 
 
+\section{WPES: TightRope: Towards Optimal Load-balancing of Paths in Anonymous Networks}
+\noindent\textbf{Speaker: Hussein Darir (University of Illinois at Urbana-Champaign)}, collaboration with Hussein Sibai (University of Illinois at Urbana-Champaign), Nikita Borisov (University of Illinois at Urbana-Champaign), Geir Dullerud (University of Illinois at Urbana-Champaign), and Sayan Mitra (University of Illinois at Urbana-Champaign)\\
+
+The paper is about Tor; some Tor circuits tend to be slow. Knowing the current state of the network (in terms of congestion and usage) leaks too much information, but maybe differential privacy can help us here. The goal is to use load balancing with locally optimal mechanisms and this mechanism should then be differentially private.
+
+They assume that each user only holds a single static circuiy that is active all the time. 
+
+Each relay computes the ratio between their capacity over the number of paths going through it. Then they choose the relay with the minimal ratio, called the bottleneck relay (it is most congested). The path(s) going through the bottleneck relay are tagged with the ratio of the bottleneck relay. Then from the other relays, the capacity used by the path trought the bottleneck relay is substracted from these relays' capacities, and then this path is removed. The algorithm then is repeated to compute the bandwith available to each path. They evaluate this and find (unsurprisingly) that the bandwidths are unfairly distributed over paths.
+
+Their (non-private) algorithm now takes the existing bandwidth capacities and ratios into account and also computes the ratio where one more path is added to the relay. They find the most congested node, i.e., the one where the ratio would be worst if we added one. We then remove this relay (and paths through it; and update the ratios). This process is repeated until we can build a path. Using this technique makes path selection much more fair, but violates privacy.
+
+To achieve differential privacy, they need up-to-date statistics. I'm not completely sure how they achieve that; they seem to sample many times, i.e., have each user locally simulate how the network might have changed? I'm not quite sure what exactly they do and what privacy guarantees they achieve, but their evaluation shows that still some improvement over a simple random choice (without optimization) is possible.
+
+They did not analyze the impact their work has on the anonymity provided by Tor; juts the impact of releasing their histogram.
+
+
+
 
 
 
