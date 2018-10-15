@@ -53,15 +53,16 @@
 
 \title{TPDP, WPES and CCS talks}
 
-\author{Sebastian Meiser\\%
- University College London, United Kingdom, e-mail: \texttt{s.meiser@ucl.ac.uk}\\%
+\author{Sebastian Meiser$^1$, Esfandiar Mohammadi$^2$\\%
+ 1: University College London, United Kingdom, e-mail: \texttt{s.meiser@ucl.ac.uk}\\%
+ 1: ETH Zurich, Switzerland, e-mail: \texttt{mohammadi@inf.ethz.ch}\\%
 }
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Summaries of talks I attended.
+Summaries of talks we attended.
 \end{abstract}
 
 \section{Invited talk TPDP: Composition, Verification, and Differential Privacy}
@@ -70,19 +71,52 @@ Summaries of talks I attended.
 After introducing differential privacy in general, we see a few well-known composition results.
 Post-processing is seen as an instantiation of sequential composition of an $(\eps,\delta)$-DP mechanism with a $(0,0)$-DP mechanism, which is kind of nice. Similarly, local DP is presented as an instantiation of parallel composition.
 
-\subsection{Formally ferifying privacy}
-Our goals here are twofold: we want to have \emph{dynamic} verificatoin, i.e.,raise errors if DP is violated and \emph{static} verification, i.e., checking DP on all possible inputs.
+\subsection{Formally verifying privacy}
+Our goals here are twofold: we want to have \emph{dynamic} verification, i.e.,raise errors if DP is violated and \emph{static} verification, i.e., checking DP on all possible inputs.
 As a side-note, we want to simplify verification by using composition results; composition allows verification techniques to have much better automation.
 
 
 The Fuzz family of languages allows for describing each type with a metric and, using group privacy ($(\eps,0)$-DP for $\Delta_f = 1$ implies $(k\cdot \eps,0)$-DP for $\Delta_f = k$). The description allows for an immediate static analysis that can use both sequential and parallel composition. These languages, so far, cannot deal well with ADP, but the speaker is currently working on that.
 
-\paragraph{Privacy as an appriximate coupling}
-Idea: verify privacy by game hops. We somehow relate pairs of sampling instructions to show properties of a pair of inputs, but I'm not sure how exactly we do that. This static-analysis technique seems to be related to how Tim and me modeled differential indistinguishability, i.e., as a proprety of a pair of programs/machines. They, so far, cannot automatically generate proofs, but can check them.
+\paragraph{Privacy as an approximate coupling}
+Idea: verify privacy by game hops. We somehow relate pairs of sampling instructions to show properties of a pair of inputs, but I'm not sure how exactly we do that. This static-analysis technique seems to be related to how Tim and me modeled differential indistinguishability, i.e., as a property of a pair of programs/machines. They, so far, cannot automatically generate proofs, but can check them.
 
 \subsection{Advanced composition}
 They analyze the old ``advanced composition theorem'' by Dwork, Rothblum and Vadhan. The speaker says that the analysis is more complicated, since the composition theorem needs to be applied ``as a block'', instead of on small units of the program. The speaker then mentions that novel approaches (e.g., by Mironov on RDP) makes formal verification easier, as it allows to analyze a program step-by-step.
 I think that using our privacy buckets approach, such an analysis could be improved even more and made flexible as well.
+
+\subsection{Modularity}
+The verification approach aims at being able to modularly compose differential privacy mechanisms. Their approach does not solve a fundamental problem that black-box composition of DP mechanisms have: after black-box composition there is potentially too many points where noise is added. So, a more thorough approach would divide DP mechanisms into summarizing data (e.g., via statistical queries) and adding noise. Then, composition would compose the summarization operations and then only add noise once. Such an approach would deteriorate utility much less.
+
+
+\section{Invited Talk TPDP 2: Deploying Differential Privacy for Learning on Sensitive Data}
+\noindent\textbf{Speaker: Ulfar Erlingsson}
+
+The speaker mentions problems with RAPPOR, mostly that for the quantities of data they require, the privacy guarantees are deteriorating too fast. The main problem seems to be that they have to use local DP mechanisms. 
+
+The aim of their Prochlo realization is to combine the local differential privacy mechanisms with some central DP approach.
+
+They notice that if they don’t need correlations between data points from the same user, anonymous communication can help them. As a result, they have a partially central approach. They group data based on useful features.
+
+Their approach combines three aspects of uncertainty: the uncertainty introduced by the local DP mechanism (via randomized response), the uncertainty introduced by the combination (anonymity and random shuffling) and the uncertainty applied to the results afterwards (in a centralized DP manner). 
+
+\subsection{Private neural networks}
+The speaker identifies the problem of machine learning models, e.g., NNs, memoize the training data. This confirms known results on adversarial ML and works by Dawn Song and Vitaly Shmatikov.
+
+Specifically, they introduce canaries, i.e., specific numbers, and want to check whether the NN is surprised to see this canary or not. In other words, they check whether the NN learnt this canary. Their experiments show that NNs indeed learn such canaries. Learning the canaries seems to reach its worst case early, with the convergence of the model.
+
+The speaker emphasizes that this memoization is different from overfitting, because in spite of memoization generalization works well.
+
+The speaker emphasizes that there are edge cases that the NNs seemingly have to memorize exceptions, because there does not seem to be a rule to characterize these edge cases. These exceptions are not necessarily important for the final model, as they contradict the general paradigm of machine learning: to learn general properties of samples and not exceptions. This makes differential privacy a natural fit for ML.
+
+We now get an introduction into the privacy-preserving stochastic gradient descent (SGD)~\cite{abadiSGD} work and the PATE paper~\cite{PATE}.
+
+In their case study, they use prior knowledge and use a strong bayesian prior.
+
+
+
+
+
 
 
 \bibliography{adp}
