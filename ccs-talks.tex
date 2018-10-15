@@ -115,6 +115,24 @@ In their case study, they use prior knowledge and use a strong bayesian prior.
 
 
 
+\section{Local differential privacy for evolving data}
+\noindent\textbf{Speaker: Matthew Joseph}, collaboration with Aaron Roth, Jonathan Ullman and Bo Waggoner\\
+\noindent\textbf{Paper: \url{https://arxiv.org/pdf/1802.07128.pdf}}
+
+The main difficulty they tackle is evolving data, i.e., data that can change over time. The simplest solution in terms of differential privacy would be to simply have a randomized response for every user in every round. While this is very simple, privacy deteriorates over time. To moderately improve it, you can apply subsampling, i.e., ask different subsets of users every time. This is better in terms of privacy, but the error is still large.
+Local sparse vectors (?) would allow for nice privacy guarantees, but require an exponentially larger number of samples.
+
+The solution lets users “vote” to change statistics, i.e., they construct an adaptive mechanism.
+
+
+In each epoch t, each user creates a localized bit, then generates a vote for or against updating and then depending on the average vote the analyst decides whether or not the estimate should be updated (requiring more interaction) or not.
+
+Each user can guess whether or not the global estimate has changed significantly. We aren’t completely sure on the maths here, but apparently each user locally simulates what the estimate should be (in the current round) and compare that to the previous global estimate. If these don’t differ much, the user is content; if they do differ significantly, the user votes for a change.
+
+If a change occurred, the analyst collects the changed estimates from the users to update the global estimate. Otherwise the analyst just keeps the previous estimate.
+
+I’m not completely convinced yet by the proof intuition for why their mechanism satisfies differential privacy; a closer look into their paper~\footnote{available online: \url{https://arxiv.org/pdf/1802.07128.pdf}} might be in order to understand what exactly they are doing and why that is privacy-preserving, particularly towards the data analyst that collects the votes and combines the estimates.
+
 
 
 
