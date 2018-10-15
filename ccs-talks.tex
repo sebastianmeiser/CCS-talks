@@ -150,6 +150,15 @@ To achieve differential privacy, they need up-to-date statistics. I'm not comple
 They did not analyze the impact their work has on the anonymity provided by Tor; juts the impact of releasing their histogram.
 
 
+\section{WPES: ClaimChain: Improving the Security and Privacy of In-band Key Distribution for Messaging}
+\noindent\textbf{Speaker: Wouter Lueks (Ecole Polytechnique Fédérale de Lausanne)}, collaboration with Bogdan Kulynych (Ecole Polytechnique Fédérale de Lausanne), Marios Isaakidis (University College London), George Danezis (University College London), and Carmela Troncoso (Ecole Polytechnique Fédérale de Lausanne) 
+\noindent\textbf{Paper: \url{https://arxiv.org/abs/1707.06279}}
+
+The classical PKI problem is: ow does Alice find Bob's key?
+They analyze how to distribute keys for an email structure that allows for encrypted communication. Whenever someone sends an email, they want to attach some small datastructure that includes claims about their own key and about their friends' keys. Moreover, they want to hide whose keys they are communicating from unauthorized people. They intend tp do that by adding some access control mechanism, specifying who can access these records. Finally, they want to get non-equivocation, i.e., sending around different keys supposedly belonging to the same entity, accessible by different people.
+
+\paragraph{Their Approach}
+They store all claims (of the form ``entity, key'') into an encrypted dictionary. To hide the indexes of the dictionary, they put a verifiable random function in there, i.e., some apparently random value; they communicate this value to people of interest. They then put a proof that they computed the VRF correctly into the encrypted part. They then chain these claims together with a hash chain. This basically is the ClaimChain that can be attached to emails.
 
 
 
