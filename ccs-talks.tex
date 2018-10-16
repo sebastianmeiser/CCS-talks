@@ -213,12 +213,32 @@ Learning from their insight, they then define a novel privacy definition based o
 
 
 
+\section{Anonymitzing network traces}
+\noindent\textbf{Speaker: Meisam Mohammady}, collaboration with Lingyu Wang (Concordia institute for information systems engineering), Yuan Hong (Illinois Institute of Technology), Habib Louafi (Ericsson Research Security), Makan Pourzandi (Ericsson Research Security), Mourad Debbabi (Concordia institute for information systems engineering)\\
+
+Outsourcing network traces is relevant for getting top security monitoring and analytics. Sending network traces to some outsider obviously comes with privacy concerns.
+The author mentions an anonymization function: the existing prefix preserving anonymization function preserves prefix equality, but has a variety of vulnerabilities. One of these vulnerabilities includes simply injecting a few traces to then find traces for similar subnets.
+
+The adversary is honest-but-curious and tries to find all possible matches between the anonymized and the original traces. Moreover the adversary has $\alpha$-knowledge, i.e., can have successfully injected $\alpha$ traces.
+
+They send several traces to the analyst and somehow hide the real one in there..?
+They first hide the original trace, then partition the ptrace, then encrypt each partition a different number of times (thus each partition is prefix-preserved, but globally it isn't). They create several views then, one of which is the real one (why does that not have the same problem again?). To protect against such madness, they require their fake views to be within a $e^\eps$ privacy loss of the real view, i.e., they all could have been ``real''. I'm not quite sure how they achieve that, but it involves a lot of encrypting and ``reverse encrypting'', which might be decryption.
 
 
 
+\section{Toward Detecting Violations of Differential Privacy}
+\noindent\textbf{Speaker: Yuxin Wang (Pennsylvania State Univerisity)}, collaboration with Ding Ding (Pennsylvania State Univerisity), Guanhong Wang (Pennsylvania State Univerisity), Danfeng Zhang (Pennsylvania State Univerisity), Daniel Kifer (Pennsylvania State Univerisity)\\
 
+The aim of the talk is to test the design of algorithms to find out whether they are differentially private. To this end, they present a tool. They use pure DP in their work. Their aim is to find a good counterexample, i.e., a pair of adjacent databases and a set $S$ s.t. the DP formula is violated. That sounds quite straight-forward, but I'm not sure how easy it is to find these counterexamples.
 
+\begin{itemize}
+	\item First they need to find candidate databases; to this end they try to find the most extreme databases that still satisfies DP, such as pairs like $[1,1,1,1]$ and $[2,2,0,0]$ (same sum) or $[1,1,1,1]$ and $[2,0,0,0]$. This kind of strategy is not sound (that's not their aim anyway), but as long as the tool is meant as a help for programmers, it's probably a good start.
+	\item For finding a set $S$ given $D_0$ and $D_1$ they run the mechanism many times and try to figure out the privacy loss, then selecting the highest ones.
+	\item Given $D_0, D_1$ and $S$, they apply a hypothesis test to figure out whether DP is violated: DP being preserved is their null-hypothesis and they try to get a small p-value. I think that makes sense; they have the additional problem that they would need to sample/run the mechanism many times and don't have a ground truth. Instead they use a clever Fisher-test to get a p-value for whether this particular hypothesis is true.
 
+I like their approach, as it is a nice guide for program designers. The tool runs within 23 seconds, which means it can be used quickly in the development process.
+
+\end{itemize}
 
 
 
