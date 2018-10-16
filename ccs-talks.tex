@@ -241,6 +241,24 @@ I like their approach, as it is a nice guide for program designers. The tool run
 \end{itemize}
 
 
+\section{Secure Computation with Differentially Private Access Patterns}
+\noindent\textbf{Speaker: Sahar Mazloom (George Mason University)}, collaboration with S. Dov Gordon (George Mason University)\\
+
+They look at secure computation; they are looking at secret sharing in a two-party setup. each user performs secret sharing with two servers, but these servers then compute the exact sums in the data. If done naively, we still leak access patterns, in addition to the noiseless results we output. Since generic solutions for hiding access patterns are expensive, they allow a little bit of leakage for these access patterns (i.e., differential privacy). This is related to what Raphael Toledo was working on with his DP Oram project.\footnote{Mix-ORAM: Using Delegated Shuffles and }
+
+The relaxation allows to reduce the asymptotic complexity from $O(n\log n)$ to $\alpha n$, where $\alpha$ depends on the DP parameters.  What they do is that instead of an expensive shuffle operation, they add a number of dummy elements and then perform an oblivious shuffle to mix real and fake elements; each element is annotated with whether it is real or fake (internally, of course).
+
+They can compute a variety of meaningful metrics with their approach including histograms, PageRank and matrix factorization.
+
+\section{DP-Finder: Finding Differential Privacy Violations by Sampling and Optimization}
+\noindent\textbf{Speaker: Benjamin Bichsel (ETH Zürich)}, collaboration with Timon Gehr (ETH Zürich), Dana Drachsler Cohen (ETH Zürich), Petar Tsankov (ETH Zürich), Martin Vechev (ETH Zürich)\\
+
+The second system for finding differential privacy violations presented at CCS'18. Their approach introduces a lower-bound for pure differential privacy. They notice that what they actually want to do find some lower bound on the privacy loss (for the whole test $S$): $\mathcal L^S_{M(D_0)||M(D_1)} = \log\frac{M(D_0) \in S}{M(D_1) \in S}$. Their evaluation shows that this is possible, which I don't find extremely surprising.
+
+What's more intesting is that they approximate their privacy losses by sampling, which of course makes sense. They then make their privacy losses differentiable (but they don't seem to order them). They approximate the privacy loss by running $M(D_0)$ many times and $M(D_1)$ many times to then get an approximate for the two probabilities, to then compute the ratio. They do need quite a lot of samples, but I think their sampling approach is pretty interesting.
+
+I think this approach is mostly useful if we're interested in implementation mistakes, not if we care about mechanisms for which we know the probabilities (because then we could look at the real privacy loss).
+
 
 
 \bibliography{adp}
