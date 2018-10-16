@@ -163,7 +163,7 @@ They store all claims (of the form ``entity, key'') into an encrypted dictionary
 
 \section{WPES: What's a little leakage between friends? (Short)}
 \noindent\textbf{Speaker: Sebastian Angel}, collaboration with David Lazar, Ioanna Tzialla\\
-\noindent\textbf{Paper: \url{https://arxiv.org/abs/1809.00111}}
+\noindent\textbf{Paper: \url{https://arxiv.org/abs/1809.00111}}\\
 
 Metadata-private messaging systems allow communication without leaking metadata to providers, servers or users not involved in the communication. In the simplest case, everyone sends packets to everyone else. Existing MPM systems avoid this broadcast by limiting the number of messages per round. Clients now have to start scheduling their own communication (and potentially wait until their messages are being sent). To actually communicate, you can have a dialing round in which you negotiate a communication round.
 
@@ -171,13 +171,56 @@ They then analyze what happens if a malicious user tries to gain information abo
 
 \section{WPES: DynaFlow: An Efficient Website Fingerprinting Defense Based on Dynamically-Adjusting Flows (Short)}
 \noindent\textbf{Speaker: David Lu (MIT PRIMES)}, collaboration with Sanjit Bhat (MIT PRIMES), Albert Kwon (MIT), and Srinivas Devadas (MIT)\\
-\noindent\textbf{Paper: \url{https://dl.acm.org/citation.cfm?id=3268960}}
+\noindent\textbf{Paper: \url{https://dl.acm.org/citation.cfm?id=3268960}}\\
 
 The paper aims at countering website fingerprinting, particularly when people are using Tor. As we know, Tor is vulnerable to traffic analysis attacks, including website fingerprinting attacks. The talk considers an open-world scenario for fingerprinting. Existing defenses, e.g., supersequence defenses over-approximate all websites within an anonymity set and make all these websites look the same. Similarly, constant flow defenses enforce a constant transmission rate, which introduces a significant overhead as well.
 
 Their approach morphs traffic into fixed bursts: $o$ outgoing and $i$ incoming packets, for fixed values $o$ and $i$. Moreover, they vary the inter-packet timing interval: $t$ changes every $b$ bursts, $t$ is chosen from some set $\set{t_1, \ldots, t_k}$ and up to $a$ adjustments are allowed.\footnote{I'm not sure within which time frame $a$ is measured}
 
 They evaluate their approach against a couple of existing attacks, using both a ``medium security'' and a ``high security'' setting. Their results look promising: the overheads are only $28\%$ of time overhead and about $110\%$ of bandwidth overhead.
+
+
+\section{(Privacy): ABY3: A Mixed Protocol Framework for Machine Learning}
+\noindent\textbf{Authors: Payman Mohassel (Visa), Peter Rindal (Oregon State University)}\\
+\noindent\textbf{Paper: \url{https://eprint.iacr.org/2018/403.pdf}}\\
+
+Three party SMPC; each party encrypts their data and sends some of their shares to the other parties. 
+They use three types of sharing: arithmetic (sums; $x = x_1 + x_2 + x_3$), binary (xor $x = x_1 \oplus x_2 \oplus x_3$) and Yao's garbled circuits.
+
+
+Their main focus is on machine learning, for which they represent floating point numbers as a pair of integers that they process separately, which is pretty straight-forward.
+They use a trick in which they briefly fall back to a 2-out-of-2 secret sharing mechanism for performing multiplications securely without adding a lot of overhead. Moreover, they can deal with matrix multiplication with less communication overhead than state-of-the-art.
+
+They show a general way to convert freely between arithmetic secret sharing, boolean secret sharing, and Yao's garbled circuits.
+
+Finally, they can perform linear and logistic regression as an SMPC and repeat the process to train neural networks. Particularly for neural networks, their performance is orders of magnitude better than previous work on two-party SMPC (called ``SecureML'').
+
+\section{(Privacy): Voting: you can’t have privacy without verifiability}
+\noindent\textbf{Speaker: Joseph Lallemand (CNRS, Inria, Loria, Université de Lorraine, France)}, collaboration with Véronique Cortier (CNRS, Inria, Loria, Université de Lorraine, France)\\
+\noindent\textbf{Paper: \url{https://hal.inria.fr/hal-01858034/document}}\\
+
+As the title suggests, the paper is about the formal verification of voting.
+The speaker emphasizes that, particularly in eVoting, there are many potential adversarial parties and attack angles, including dishonest voters, ballot boxes, tallying authorities and communication channels. The main gals they have are privacy (of votes, as an indistinguishability property), verifiability (voters can check that their votes have been correctly cast, including: individuals checking that the vote is in the box, everyone checking that the results have been computed based on the votes in the box and finally, the verification that only valid voters participated).
+
+Privacy and verifiability naturally is contradictory: it is quite easy to achieve one without the other, but hard to achieve both together.
+
+They show, in fact, that their definition of privacy directly implies their definition of individual verifiability. I presume that they implicitly require correctness, as otherwise this is clearly not true.\footnote{Consider the protocol that always outputs the same ``results'' independent of the votes; this preserves privacy, but since the votes aren't used, they cannot be verified.}
+They define individual verifiability as the inability of the attacker to modify the result of the voting: The adversary is allowed to cast votes, but must not be able to ``remove the honest votes from the result''. I'm not sure what exactly that means, but I think that this is where their implicit correctness assumption comes into play. 
+
+They then prove that an attacker that can manipulate individual verifiability (i.e., remove people's votes) can break privacy. The proof starts with an attacker that can manipulate people's votes and they then use this attacker to break privacy (just fix Alice's vote as either $0$ or $1$) and then, since the \textbf{distributions} the adversary has to provide for privacy have to \textbf{return the same result} for the voting process, the adversary can learn Alice's vote by checking whether the tally changed. This proof technique is tailored to the attacker, but in their paper they generalize the technique to work with any attacker.
+
+Learning from their insight, they then define a novel privacy definition based on the verification steps of the protocol. The ballot-box is now dishonest. The attacker is given access to an oracle that lets people verify their votes. The attacker can only see the results after all voters have verified their votes. Their implication still holds.
+
+
+
+
+
+
+
+
+
+
+
 
 
 \bibliography{adp}
