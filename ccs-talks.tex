@@ -259,6 +259,24 @@ What's more intesting is that they approximate their privacy losses by sampling,
 
 I think this approach is mostly useful if we're interested in implementation mistakes, not if we care about mechanisms for which we know the probabilities (because then we could look at the real privacy loss).
 
+\section{Cyberphysical Systems: Scission: Signal Characteristic-based sender identification and intrusion detection in automotive networks}
+\noindent\textbf{Speaker: Marcel Kneib}, collaboration with Christopher Huth\\
+
+The talk is about how physical characteristics can be used for identification of engine control units (ECU) in cars.
+
+\paragraph{Motivation}
+Cars can be attacked via hacks, which can be particularly dangerous when human lives are put at risk (failing brakes, hijacked steering, etc.). The speaker presents the issue intuitively in a case where there is no clear separation between critical components and components with connection to the outside world (internet, bluetooth, etc.). An example for that is the controller area network used for vehicular communication. This system doesn't even have sender authentication for the signals that are sent by components. Apparently it is infeasible to introduce proper integrity mechanisms.
+
+\paragraph{Idea and approach}
+Interestingly, the analog CAN signal (how fast does it rise, how stable is it, etc.) can be used to identify ECU's. Scission now samples the signal, slices it, puts them into three possible groups, extracts features and then performs classification.
+
+Their features include the moments of the function, e.g., mean, standard deviation and variance, skewness, etc.; they require their initial training to be in a safe environment (to avoid poisoning attacks). They also share keys between the ECUs and their module. Intrusion detection now means running the classifier to identify the sender; each identifier is only used by one ECU and in case of a conflict, an alarm is raised. To reduce false-positives, they include a confidence bar and only raise an alarm if the classification has a strong confidence in its identification. 
+
+Their evaluation considers either 10 or 6+2 ECUs and is tested in real car systems. The identification rate seems pretty good and they have no false-positives. However, I wonder how easy it might be to reduce the confidence in the classification; that appears like a potential vulnerability.
+
+
+
+
 
 
 \bibliography{adp}
