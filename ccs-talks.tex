@@ -375,6 +375,24 @@ They have encountered pretty terrible misconfigurations, including the combinati
 
 They asked operators on whether they think their managers know what they are doing. Non-IT and governmental OPs were more skeptical of their managers than OPs working in IT. As a funny side-note: trust in their own tools seems to be directly correlated with juniority of the operators, which I think makes sense. Moreover, although OPs like blameless post mortems, i.e., allowing people to honestly report their mistakes and not being punished as long as they were not completely careless, they also answered that their companies did not budget for errors.
 
+\subsection{Detecting User Experience Issues of the Tor Browser In The Wild}
+\noindent\textbf{Speaker: Kevin Gallagher (New York University)}, collaboration with Sameer Patil (Indiana University Bloomington), Brendan Dolan-Gavitt (New York University), Damon McCoy (New York University), Nasir Memon (New York University)
+
+\paragraph{Motivation} We get a very brief background on Tor\footnote{\url{https://www.torproject.org}}, including the Tor browser, a by now well-known tool for browsing the web anonymously. The main research question is what the user's naturalistic web browsing experience is for people that use the Tor browser.
+
+The goals then are to study naturalistic Tor use, i.e., in a real-world setting and not in a lab, to also preserve the privacy of users, while finally get fine-granular data. I think they asked people to install the Tor browser on their own machines and then performed questionnaires, interviews and finally asked people to write about why they would bypass the Tor browser and use another browser instead.
+
+They wrote a Python script to look for the launches and actions of the Tor browser. if the participant uses the Tor browser, they would change to the state ``Tor browser open''; when the respective browser was closed, participants were asked to answer a questionnaire. If after opening a browser the participant opened another browser (without closing the first one), the state went to ``browser switch'' and they were asked about a respective ``why did you switch'' questionnaire after they closed the browser.
+
+\paragraph{Dataset and results} They only had a n=19 dataset, heavily biased towards young male participants; they collected about 120 questionnaires.
+A main issue they heard was that sites did not work properly, e.g., news sites did not properly work in the Tor browser. Moreover, participants were annoyed that they were treated differently (e.g., had to perform several captchas before being able to access search queries). Moreover, they complained that localization led to websites in foreign languages. In addition people reported a lack of convenience-features, such as lack of easy access to bookmarks and password managers.
+
+On the positive side, participants enjoyed warnings, e.g., that websites could observe the size of the browser window (and the dangers of resizing) and the information on the Tor circuit through which their traffic was routed.
+
+\paragraph{Lessons learned and conclusion}
+Kevin observes that selecting an appropriate attacker model might be important or relevant for many users: not every user needs to be worried about every attack angle the Tor browser protects against.
+
+Overall, while these results give us some additional insight into the user experiences of the Tor browser, a sample set of $n=19$ means that we probably should not take these results as final, but rather as a bit of evidence; consequently, more studies, involving more participants and larger sample sizes are an interesting area for future work. Since their script-driven approach seems  easily applicable, such studies might be possible without significant hurdles.
 
 
 
