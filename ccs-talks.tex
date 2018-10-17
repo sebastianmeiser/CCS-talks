@@ -64,7 +64,7 @@
 \maketitle
 
 \begin{abstract}
-Summaries of talks we attended.
+This is a document of summaries of talks I attended at CCS 2018. Please note that in most cases I have not read the paper before writing the summary, so my summaries might be very shallow and sometimes factually incorrect. If you notice any inconsistencies, errors or would like me to include aspects that I've missed, please just send me an email.
 \end{abstract}
 
 \tableofcontents
@@ -325,6 +325,37 @@ They then generate interaction chains to figure out which snippets of interactio
 In more details, they actually have a more fine-grained model of the normal behavior: they classify the intra-app chains into several types of chains, e.g., ``temperature related stuff'' and ``movement related stuff''; if the physical interactions fall into the same classes, they are considered fine. If they fall outside of the classes learned on the intra-app interactions, the distance to the nearest class is the ``risk factor'' of these samples.
 
 Looking at their evaluation, the method seems to leave a lot of room for improvement. It is better than pure random guessing, but not by too much.
+
+
+\section{CCS, Wednesday, Usable Security}
+\subsection{Asking for a Friend: Evaluating Response Biases in Security User Studies}
+\noindent\textbf{Speaker: Elissa M. Redmiles (University of Maryland)}, collaboration with Ziyun Zhu (University of Maryland), Sean Kross (University of California San Diego), Dhruv Kuchhal (Maharaja Agrasen Institute of Technology), Tudor Dumitras (University of Maryland), Michelle L. Mazurek (University of Maryland)
+
+\paragraph{Motivation}
+There is an increasing number of surveys published at the top security conferences. A key-question thus is whether the answers given by people questioned for these surveys are correct. There are many aspects, but Elissa focuses on the questions in this talk.
+
+\paragraph{Evaluation / dataset}
+For their evaluation, they use Symantec host records (500k people) on whether and how fast people updated their software and then performed a survey on 2k people how they would intend to respond to a message that there is a new update.
+They picked the answer choices to match the frequencies they observed in the data. They also phrased the question s.t. it matched previous work. They suggest that you always include an ``I don't know / don't want to answer'' in any survey, to prevent people from randomly answering if they don't want to answer.
+They performed a significant number of pretesting steps, but Elissa emphasizes that pilots should only be used for making sure the technical stuff works.
+
+\paragraph{Biases and lessons learned} Not surprisingly, they found a systematic bias, i.e., they answer more positively when questioned whether they would update their system. When asking what they would recommend a friend should do intsead of what they think they'd do, the answers are even more positive.
+
+They tried to measure the ``cost'' of updating their system, including ``having to restart the system'' and ``the observed number of crashes'' (including observations on the first derivative of crashes: ``does the application crash more or less often?''). They found that people who generally tended to update (as by their metric of costs) tended to answer that they intended to update more (significant positiv effect); there also was a much smaller effect on whether they indeed updated faster.
+
+To filter out subjects that answered wrong or illogical things, e.g., that claimed they wanted to update because the update didn't require a restart if the message explicitly said a restart was required. Overall though, Elissa paints a bleak picture and suggests not using surveys for finding the actual truth on statistics, but more for getting an impression on ``why'' people act in certain ways.
+
+
+
+
+
+
+
+
+
+
+
+
 
 \bibliography{adp}
 \bibliographystyle{abbrv}
