@@ -67,13 +67,18 @@
 Summaries of talks we attended.
 \end{abstract}
 
-\section{Invited talk TPDP: Composition, Verification, and Differential Privacy}
+\tableofcontents
+\clearpage
+
+\section{Pre-Conference Workshops}
+
+\subsection{Invited talk TPDP: Composition, Verification, and Differential Privacy}
 \noindent\textbf{Speaker: Justin Hsu}
 
 After introducing differential privacy in general, we see a few well-known composition results.
 Post-processing is seen as an instantiation of sequential composition of an $(\eps,\delta)$-DP mechanism with a $(0,0)$-DP mechanism, which is kind of nice. Similarly, local DP is presented as an instantiation of parallel composition.
 
-\subsection{Formally verifying privacy}
+\subsubsection{Formally verifying privacy}
 Our goals here are twofold: we want to have \emph{dynamic} verification, i.e.,raise errors if DP is violated and \emph{static} verification, i.e., checking DP on all possible inputs.
 As a side-note, we want to simplify verification by using composition results; composition allows verification techniques to have much better automation.
 
@@ -83,7 +88,7 @@ The Fuzz family of languages allows for describing each type with a metric and, 
 \paragraph{Privacy as an approximate coupling}
 Idea: verify privacy by game hops. We somehow relate pairs of sampling instructions to show properties of a pair of inputs, but I'm not sure how exactly we do that. This static-analysis technique seems to be related to how Tim and me modeled differential indistinguishability, i.e., as a property of a pair of programs/machines. They, so far, cannot automatically generate proofs, but can check them.
 
-\subsection{Advanced composition}
+\subsubsection{Advanced composition}
 They analyze the old ``advanced composition theorem'' by Dwork, Rothblum and Vadhan. The speaker says that the analysis is more complicated, since the composition theorem needs to be applied ``as a block'', instead of on small units of the program. The speaker then mentions that novel approaches (e.g., by Mironov on RDP) makes formal verification easier, as it allows to analyze a program step-by-step.
 I think that using our privacy buckets approach, such an analysis could be improved even more and made flexible as well.
 
@@ -91,7 +96,7 @@ I think that using our privacy buckets approach, such an analysis could be impro
 The verification approach aims at being able to modularly compose differential privacy mechanisms. Their approach does not solve a fundamental problem that black-box composition of DP mechanisms have: after black-box composition there is potentially too many points where noise is added. So, a more thorough approach would divide DP mechanisms into summarizing data (e.g., via statistical queries) and adding noise. Then, composition would compose the summarization operations and then only add noise once. Such an approach would deteriorate utility much less.
 
 
-\section{Invited Talk TPDP 2: Deploying Differential Privacy for Learning on Sensitive Data}
+\subsection{Invited Talk TPDP 2: Deploying Differential Privacy for Learning on Sensitive Data}
 \noindent\textbf{Speaker: Ulfar Erlingsson}
 
 The speaker mentions problems with RAPPOR, mostly that for the quantities of data they require, the privacy guarantees are deteriorating too fast. The main problem seems to be that they have to use local DP mechanisms. 
@@ -102,7 +107,7 @@ They notice that if they don’t need correlations between data points from the 
 
 Their approach combines three aspects of uncertainty: the uncertainty introduced by the local DP mechanism (via randomized response), the uncertainty introduced by the combination (anonymity and random shuffling) and the uncertainty applied to the results afterwards (in a centralized DP manner). 
 
-\subsection{Private neural networks}
+\subsubsection{Private neural networks}
 The speaker identifies the problem of machine learning models, e.g., NNs, memoize the training data. This confirms known results on adversarial ML and works by Dawn Song and Vitaly Shmatikov.
 
 Specifically, they introduce canaries, i.e., specific numbers, and want to check whether the NN is surprised to see this canary or not. In other words, they check whether the NN learnt this canary. Their experiments show that NNs indeed learn such canaries. Learning the canaries seems to reach its worst case early, with the convergence of the model.
@@ -117,7 +122,7 @@ In their case study, they use prior knowledge and use a strong bayesian prior.
 
 
 
-\section{Local differential privacy for evolving data}
+\subsection{Local differential privacy for evolving data}
 \noindent\textbf{Speaker: Matthew Joseph}, collaboration with Aaron Roth, Jonathan Ullman and Bo Waggoner\\
 \noindent\textbf{Paper: \url{https://arxiv.org/pdf/1802.07128.pdf}}
 
@@ -136,7 +141,7 @@ If a change occurred, the analyst collects the changed estimates from the users 
 I’m not completely convinced yet by the proof intuition for why their mechanism satisfies differential privacy; a closer look into their paper~\footnote{available online: \url{https://arxiv.org/pdf/1802.07128.pdf}} might be in order to understand what exactly they are doing and why that is privacy-preserving, particularly towards the data analyst that collects the votes and combines the estimates.
 
 
-\section{WPES: TightRope: Towards Optimal Load-balancing of Paths in Anonymous Networks}
+\subsection{WPES: TightRope: Towards Optimal Load-balancing of Paths in Anonymous Networks}
 \noindent\textbf{Speaker: Hussein Darir (University of Illinois at Urbana-Champaign)}, collaboration with Hussein Sibai (University of Illinois at Urbana-Champaign), Nikita Borisov (University of Illinois at Urbana-Champaign), Geir Dullerud (University of Illinois at Urbana-Champaign), and Sayan Mitra (University of Illinois at Urbana-Champaign)\\
 
 The paper is about Tor; some Tor circuits tend to be slow. Knowing the current state of the network (in terms of congestion and usage) leaks too much information, but maybe differential privacy can help us here. The goal is to use load balancing with locally optimal mechanisms and this mechanism should then be differentially private.
@@ -152,7 +157,7 @@ To achieve differential privacy, they need up-to-date statistics. I'm not comple
 They did not analyze the impact their work has on the anonymity provided by Tor; juts the impact of releasing their histogram.
 
 
-\section{WPES: ClaimChain: Improving the Security and Privacy of In-band Key Distribution for Messaging}
+\subsection{WPES: ClaimChain: Improving the Security and Privacy of In-band Key Distribution for Messaging}
 \noindent\textbf{Speaker: Wouter Lueks (Ecole Polytechnique Fédérale de Lausanne)}, collaboration with Bogdan Kulynych (Ecole Polytechnique Fédérale de Lausanne), Marios Isaakidis (University College London), George Danezis (University College London), and Carmela Troncoso (Ecole Polytechnique Fédérale de Lausanne) 
 \noindent\textbf{Paper: \url{https://arxiv.org/abs/1707.06279}}
 
@@ -163,7 +168,7 @@ They analyze how to distribute keys for an email structure that allows for encry
 They store all claims (of the form ``entity, key'') into an encrypted dictionary. To hide the indexes of the dictionary, they put a verifiable random function in there, i.e., some apparently random value; they communicate this value to people of interest. They then put a proof that they computed the VRF correctly into the encrypted part. They then chain these claims together with a hash chain. This basically is the ClaimChain that can be attached to emails.
 
 
-\section{WPES: What's a little leakage between friends? (Short)}
+\subsection{WPES: What's a little leakage between friends? (Short)}
 \noindent\textbf{Speaker: Sebastian Angel}, collaboration with David Lazar, Ioanna Tzialla\\
 \noindent\textbf{Paper: \url{https://arxiv.org/abs/1809.00111}}\\
 
@@ -171,7 +176,7 @@ Metadata-private messaging systems allow communication without leaking metadata 
 
 They then analyze what happens if a malicious user tries to gain information about whether others are talking: the idea is that an adversary can ask a user whether they want to talk; since every user only has a limited number of (real) messages per round, they can see whether the user is ``free'' or ``already in conversation''. To counter this, they envision a private answering machine, that hides from callers whether or not a user is talking; moreover eventually a caller needs to get through and it should be efficient, i.e., the capacity of the answering machine should be significantly smaller than full broadcast. Their proposal has several limitations, including that everyone needs to have a max number of friends $m$; then statically map callers to rounds (mod $m$). Drawbacks are potential limitation and leakage of the number of friends and an increased latency (if the answering machine has low capacity or the user many friends).
 
-\section{WPES: DynaFlow: An Efficient Website Fingerprinting Defense Based on Dynamically-Adjusting Flows (Short)}
+\subsection{WPES: DynaFlow: An Efficient Website Fingerprinting Defense Based on Dynamically-Adjusting Flows (Short)}
 \noindent\textbf{Speaker: David Lu (MIT PRIMES)}, collaboration with Sanjit Bhat (MIT PRIMES), Albert Kwon (MIT), and Srinivas Devadas (MIT)\\
 \noindent\textbf{Paper: \url{https://dl.acm.org/citation.cfm?id=3268960}}\\
 
@@ -181,8 +186,9 @@ Their approach morphs traffic into fixed bursts: $o$ outgoing and $i$ incoming p
 
 They evaluate their approach against a couple of existing attacks, using both a ``medium security'' and a ``high security'' setting. Their results look promising: the overheads are only $28\%$ of time overhead and about $110\%$ of bandwidth overhead.
 
+\section{CCS, Tuesday, Privacy Session}
 
-\section{(Privacy): ABY3: A Mixed Protocol Framework for Machine Learning}
+\subsection{ABY3: A Mixed Protocol Framework for Machine Learning}
 \noindent\textbf{Authors: Payman Mohassel (Visa), Peter Rindal (Oregon State University)}\\
 \noindent\textbf{Paper: \url{https://eprint.iacr.org/2018/403.pdf}}\\
 
@@ -197,7 +203,7 @@ They show a general way to convert freely between arithmetic secret sharing, boo
 
 Finally, they can perform linear and logistic regression as an SMPC and repeat the process to train neural networks. Particularly for neural networks, their performance is orders of magnitude better than previous work on two-party SMPC (called ``SecureML'').
 
-\section{(Privacy): Voting: you can’t have privacy without verifiability}
+\subsection{Voting: you can’t have privacy without verifiability}
 \noindent\textbf{Speaker: Joseph Lallemand (CNRS, Inria, Loria, Université de Lorraine, France)}, collaboration with Véronique Cortier (CNRS, Inria, Loria, Université de Lorraine, France)\\
 \noindent\textbf{Paper: \url{https://hal.inria.fr/hal-01858034/document}}\\
 
@@ -214,8 +220,8 @@ They then prove that an attacker that can manipulate individual verifiability (i
 Learning from their insight, they then define a novel privacy definition based on the verification steps of the protocol. The ballot-box is now dishonest. The attacker is given access to an oracle that lets people verify their votes. The attacker can only see the results after all voters have verified their votes. Their implication still holds.
 
 
-
-\section{Anonymitzing network traces}
+\section{CCS, Tuesday, Differential Privacy 2 session}
+\subsection{Preserving Both Privacy and Utility in Network Trace Anonymization}
 \noindent\textbf{Speaker: Meisam Mohammady}, collaboration with Lingyu Wang (Concordia institute for information systems engineering), Yuan Hong (Illinois Institute of Technology), Habib Louafi (Ericsson Research Security), Makan Pourzandi (Ericsson Research Security), Mourad Debbabi (Concordia institute for information systems engineering)\\
 
 Outsourcing network traces is relevant for getting top security monitoring and analytics. Sending network traces to some outsider obviously comes with privacy concerns.
@@ -228,7 +234,7 @@ They first hide the original trace, then partition the ptrace, then encrypt each
 
 
 
-\section{Toward Detecting Violations of Differential Privacy}
+\subsection{Toward Detecting Violations of Differential Privacy}
 \noindent\textbf{Speaker: Yuxin Wang (Pennsylvania State Univerisity)}, collaboration with Ding Ding (Pennsylvania State Univerisity), Guanhong Wang (Pennsylvania State Univerisity), Danfeng Zhang (Pennsylvania State Univerisity), Daniel Kifer (Pennsylvania State Univerisity)\\
 
 The aim of the talk is to test the design of algorithms to find out whether they are differentially private. To this end, they present a tool. They use pure DP in their work. Their aim is to find a good counterexample, i.e., a pair of adjacent databases and a set $S$ s.t. the DP formula is violated. That sounds quite straight-forward, but I'm not sure how easy it is to find these counterexamples.
@@ -243,7 +249,7 @@ I like their approach, as it is a nice guide for program designers. The tool run
 \end{itemize}
 
 
-\section{Secure Computation with Differentially Private Access Patterns}
+\subsection{Secure Computation with Differentially Private Access Patterns}
 \noindent\textbf{Speaker: Sahar Mazloom (George Mason University)}, collaboration with S. Dov Gordon (George Mason University)\\
 
 They look at secure computation; they are looking at secret sharing in a two-party setup. each user performs secret sharing with two servers, but these servers then compute the exact sums in the data. If done naively, we still leak access patterns, in addition to the noiseless results we output. Since generic solutions for hiding access patterns are expensive, they allow a little bit of leakage for these access patterns (i.e., differential privacy). This is related to what Raphael Toledo was working on with his DP Oram project.\footnote{Mix-ORAM: Using Delegated Shuffles and }
@@ -252,7 +258,7 @@ The relaxation allows to reduce the asymptotic complexity from $O(n\log n)$ to $
 
 They can compute a variety of meaningful metrics with their approach including histograms, PageRank and matrix factorization.
 
-\section{DP-Finder: Finding Differential Privacy Violations by Sampling and Optimization}
+\subsection{DP-Finder: Finding Differential Privacy Violations by Sampling and Optimization}
 \noindent\textbf{Speaker: Benjamin Bichsel (ETH Zürich)}, collaboration with Timon Gehr (ETH Zürich), Dana Drachsler Cohen (ETH Zürich), Petar Tsankov (ETH Zürich), Martin Vechev (ETH Zürich)\\
 
 The second system for finding differential privacy violations presented at CCS'18. Their approach introduces a lower-bound for pure differential privacy. They notice that what they actually want to do find some lower bound on the privacy loss (for the whole test $S$): $\mathcal L^S_{M(D_0)||M(D_1)} = \log\frac{M(D_0) \in S}{M(D_1) \in S}$. Their evaluation shows that this is possible, which I don't find extremely surprising.
@@ -261,7 +267,9 @@ What's more intesting is that they approximate their privacy losses by sampling,
 
 I think this approach is mostly useful if we're interested in implementation mistakes, not if we care about mechanisms for which we know the probabilities (because then we could look at the real privacy loss).
 
-\section{Cyberphysical Systems: Scission: Signal Characteristic-based sender identification and intrusion detection in automotive networks}
+\section{CCS, Wednesday, Cyberphysical Systems session}
+
+\subsection{Scission: Signal Characteristic-based sender identification and intrusion detection in automotive networks}
 \noindent\textbf{Speaker: Marcel Kneib}, collaboration with Christopher Huth\\
 
 The talk is about how physical characteristics can be used for identification of engine control units (ECU) in cars.
@@ -276,7 +284,7 @@ Their features include the moments of the function, e.g., mean, standard deviati
 
 Their evaluation considers either 10 or 6+2 ECUs and is tested in real car systems. The identification rate seems pretty good and they have no false-positives. However, I wonder how easy it might be to reduce the confidence in the classification; that appears like a potential vulnerability.
 
-\section{Detecting Attacks Against Robotic Vehicles: A Control Invariant Approach}
+\subsection{Detecting Attacks Against Robotic Vehicles: A Control Invariant Approach}
 \noindent\textbf{Speaker: Hongjun Choi (Purdue University)}, collaboration with Wen-Chuan Lee (Purdue University), Yousra Aafer (Purdue University), Fan Fei (Purdue University), Zhan Tu (Purdue University), Xiangyu Zhang (Purdue University), Dongyan Xu (Purdue University), Xinyan Deng (Purdue University)\\
 
 Robotic Vehicles (RV) include hobby drones, delivering drones, military UAC's self driving cars. Abstractly, these RV's are physical systems that interact with the physical world, while under control of a cyber-system. The main motivation for the talk is that while we are starting to understand and defend against cyber attacks, new attacks focus on physical attacks: new signals, spoofed sensors, or throwing stones at drones. A cute example is disturbing the gyro-sensors using noise (actual audio signals) that will influence the behavior of a drone.
@@ -284,6 +292,29 @@ Robotic Vehicles (RV) include hobby drones, delivering drones, military UAC's se
 To detect such attacks, they employ control invariants that, e.g., check whether the laws of physics are seemingly violated in the sensor data. To this end, they predict the next system state during runtime and compare this prediction with what they measure. They reverse-engineer the control graph of the RV and insert their invariants into the control program binary of the RV.
 
 They show that their prediction is pretty close to the measurements; their errors are fairly small and at least all of their own attacks were detected. The authors are aware that this doesn't yet make the system secure: They perform an attack and while they immediately detect it in their ground-based system, in the speaker's words, ``the drone still crashes, but we see an error message''.
+
+\subsection{Truth Will Out: Departure-Based Process-Level Detection of Stealthy Attacks on Control Systems}
+\noindent\textbf{Speaker: Magnus Almgren (Chalmers University of Technology)}, collaboration with Wissam Aoudi (Chalmers University of Technology), Mikel Iturbe (Mondragon University)\\
+
+The talk tackles industrial control systems and their vulnerabilities, e.g., the blackouts caused in Ukraine. Attacks on such systems can be devastating and we need to combine IT with operational technologies to defend against them.
+ICS systems often are cyclic and deterministic. Thus, ``normal'' behavious can be learned or even modeled. 
+
+Ideas of previous work build a model of the physical process, then use the model to predict future system behavior and compare the predictions with the observations and raise alarms whenever the deviation is too large. Magnus declares that predicting the future is unnecessarily difficult and thus their PASAD system (Process Aware Stealth Attack Detection) focuses on solving an easier problem: They thus require only limited knowledge and also detect subtle and stealthy attacks.
+PASAD uses the raw features and is model-free. 
+
+PASAD works in two phases:\begin{itemize}
+	\item Offline learning: They extract signals from the system, reduce noise, construct the signal subspace and project training vectors and compute a centroid to define the normal behavior.
+	\item Online detection: They project the same vectors and try to see whether there is a deviation from the ``normal'' behavior. They raise an alarm whenever the deviation exceeds a threshold.
+\end{itemize}
+
+This is a nice safeguard, but again has the same limitations that the previous talks on this field had: we don't get any kind of guarantee and it is not completely clear, how difficult it would be to fool the system. Still, I think it is a nice monitor that should make attacks more complicated.
+
+
+
+
+
+
+
 
 
 
