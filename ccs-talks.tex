@@ -53,9 +53,11 @@
 
 \title{TPDP, WPES and CCS talks}
 
-\author{Sebastian Meiser$^1$, Esfandiar Mohammadi$^2$\\%
+\author{Sebastian Meiser$^1$
+%, Esfandiar Mohammadi$^2$
+\\%
  1: University College London, United Kingdom, e-mail: \texttt{s.meiser@ucl.ac.uk}\\%
- 1: ETH Zurich, Switzerland, e-mail: \texttt{mohammadi@inf.ethz.ch}\\%
+% 1: ETH Zurich, Switzerland, e-mail: \texttt{mohammadi@inf.ethz.ch}\\%
 }
 
 \begin{document}
@@ -274,7 +276,14 @@ Their features include the moments of the function, e.g., mean, standard deviati
 
 Their evaluation considers either 10 or 6+2 ECUs and is tested in real car systems. The identification rate seems pretty good and they have no false-positives. However, I wonder how easy it might be to reduce the confidence in the classification; that appears like a potential vulnerability.
 
+\section{Detecting Attacks Against Robotic Vehicles: A Control Invariant Approach}
+\noindent\textbf{Speaker: Hongjun Choi (Purdue University)}, collaboration with Wen-Chuan Lee (Purdue University), Yousra Aafer (Purdue University), Fan Fei (Purdue University), Zhan Tu (Purdue University), Xiangyu Zhang (Purdue University), Dongyan Xu (Purdue University), Xinyan Deng (Purdue University)\\
 
+Robotic Vehicles (RV) include hobby drones, delivering drones, military UAC's self driving cars. Abstractly, these RV's are physical systems that interact with the physical world, while under control of a cyber-system. The main motivation for the talk is that while we are starting to understand and defend against cyber attacks, new attacks focus on physical attacks: new signals, spoofed sensors, or throwing stones at drones. A cute example is disturbing the gyro-sensors using noise (actual audio signals) that will influence the behavior of a drone.
+
+To detect such attacks, they employ control invariants that, e.g., check whether the laws of physics are seemingly violated in the sensor data. To this end, they predict the next system state during runtime and compare this prediction with what they measure. They reverse-engineer the control graph of the RV and insert their invariants into the control program binary of the RV.
+
+They show that their prediction is pretty close to the measurements; their errors are fairly small and at least all of their own attacks were detected. The authors are aware that this doesn't yet make the system secure: They perform an attack and while they immediately detect it in their ground-based system, in the speaker's words, ``the drone still crashes, but we see an error message''.
 
 
 
