@@ -14,6 +14,7 @@
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage{mathcomp}
 \usepackage{url}
+\usepackage{hyperref}
 \usepackage[capitalize]{cleveref}
 \usepackage{framed}
 
@@ -339,9 +340,9 @@ For their evaluation, they use Symantec host records (500k people) on whether an
 They picked the answer choices to match the frequencies they observed in the data. They also phrased the question s.t. it matched previous work. They suggest that you always include an ``I don't know / don't want to answer'' in any survey, to prevent people from randomly answering if they don't want to answer.
 They performed a significant number of pretesting steps, but Elissa emphasizes that pilots should only be used for making sure the technical stuff works.
 
-\paragraph{Biases and lessons learned} Not surprisingly, they found a systematic bias, i.e., they answer more positively when questioned whether they would update their system. When asking what they would recommend a friend should do intsead of what they think they'd do, the answers are even more positive.
+\paragraph{Biases and lessons learned} Not surprisingly, they found a systematic bias, i.e., they answer more positively when questioned whether they would update their system. When asking what they would recommend a friend should do instead of what they think they'd do, the answers are even more positive.
 
-They tried to measure the ``cost'' of updating their system, including ``having to restart the system'' and ``the observed number of crashes'' (including observations on the first derivative of crashes: ``does the application crash more or less often?''). They found that people who generally tended to update (as by their metric of costs) tended to answer that they intended to update more (significant positiv effect); there also was a much smaller effect on whether they indeed updated faster.
+They tried to measure the ``cost'' of updating their system, including ``having to restart the system'' and ``the observed number of crashes'' (including observations on the first derivative of crashes: ``does the application crash more or less often?''). They found that people who generally tended to update (as by their metric of costs) tended to answer that they intended to update more (significant positive effect); there also was a much smaller effect on whether they indeed updated faster.
 
 To filter out subjects that answered wrong or illogical things, e.g., that claimed they wanted to update because the update didn't require a restart if the message explicitly said a restart was required. Overall though, Elissa paints a bleak picture and suggests not using surveys for finding the actual truth on statistics, but more for getting an impression on ``why'' people act in certain ways.
 
@@ -349,18 +350,39 @@ To filter out subjects that answered wrong or illogical things, e.g., that claim
 \subsection{Towards Usable Checksums: Automating the Integrity Verification of Web Downloads for the Masses}
 \noindent\textbf{Speaker: K\'evin Huguenin (UNIL – HEC Lausanne)}, collaboration with Mauro Cherubini (UNIL – HEC Lausanne), Alexandre Meylan (UNIL – HEC Lausanne), Bertil Chapuis (UNIL – HEC Lausanne), Mathias Humbert (Swiss Data Science Center, ETH Zurich and EPFL), Igor Bilogrevic (Google Inc.)
 
-K\'evin starts by cleverly confronting us with the fact that even we (as security researchers) don't actually check the checksums of software. 
+\paragraph{Motivation} K\'evin starts by cleverly confronting us with the fact that even we (as security researchers) don't actually check the checksums of software. 
 
 Checksums are often put on websites to allow users to verify that software has not been tampered with by an adversary. Since this has to be done manually, K\'evin asks the rhetorical question of whether such a barbaric technique is still appropriate in 2018. He asks a few obvious research questions (do people use checksums and are there problems?), gives obvious answers and then improves the state-of-the-art by providing a novel tool for checking integrity.
 
 Surveys:\begin{itemize}
 \item In a survey of 2,000 people we see that more than half the people do download software from venfor/developer websites (making them vulnerable to tampering, but also allowing for improvelemt); about a quarter of people remember to have seen checksums. They asked people for the purpose of checksums and find that about 5\% or people know that.
 \item When checking which types of hashes are provided by websites, about half of the ones they looked at used insecure hashes (like MD5) and only a small number of websites included instructions for how to check that the checksum is correct. Finally, they 
-\item They performed a small (n=40) study on how people actually act when confronted with checksums. Most would download software from websites, but only one third was aware of checksums. They then put the subjects in front of an eyetracker while having them download a file, compute the checksum, check the checksum and then extract annd note down some information about the program, e.g., the version number (a useless instruction used to make sure that participants were not too aware of the aim of the study). The checksum of the third program they downloaded was incorrect, but the beginning and end were correct (which I think is pretty mean): 38\% of participants did not detect this mismatch, even though they were explicitly instructed to verify the checksum. This correlation rate was not correlated with prior knowledge about checksums. They also noticed that people mostly looked at the beginning of checksums, not at the end of checksums.
+\item They performed a small (n=40) study on how people actually act when confronted with checksums. Most would download software from websites, but only one third was aware of checksums. They then put the subjects in front of an eye-tracker while having them download a file, compute the checksum, check the checksum and then extract annd note down some information about the program, e.g., the version number (a useless instruction used to make sure that participants were not too aware of the aim of the study). The checksum of the third program they downloaded was incorrect, but the beginning and end were correct (which I think is pretty mean): 38\% of participants did not detect this mismatch, even though they were explicitly instructed to verify the checksum. This correlation rate was not correlated with prior knowledge about checksums. They also noticed that people mostly looked at the beginning of checksums, not at the end of checksums.
 \end{itemize}
 
 \paragraph{Solution} K\'evin admits that there already is something like a solution: with SRI (Subresource integrity) the creator of a website can include an integrity field into the \verb+<script>+ tag on the page, which will lead to the file not being downloaded if the checksum doesn't match. Consequently, they extended SRI to also work in an \verb+<a>+ tag to allow an easier inclusion into download links. Their browser extension extracts the checksums from \verb+<a>+elements, computes the checksums of the downloaded file and displays a message indicating whether the checksums match.
 Moreover, they provide an extension for Wordpress.
+
+\subsection{Investigating System Operators’ Perspective on Security Misconfigurations}
+\noindent\textbf{Speaker: Tobias Fiebig (TU Delft)}, collaboration with Constanze Dietrich (Berliner Hochschule f\"ur Technik), Katharina Krombholz (CISPA Helmholtz Center (i.G.)), Kevin Borgolte (Princeton University)
+
+\paragraph{Motivation} Tobias mentions that misconfigurations are a major issue for security.  In this work, they started with exploratory interviews using IRC (for some reason) and then performed a study using a questionnaire on about 200 system operators. 
+
+\paragraph{Selection of results}
+Over 75\% answered that they had made misconfigurations in general, but even 90\% admitted that they had made a specific misconfiguration; with the exception of just one operator, everyone answered that they had encountered someone else making a misconfiguration.
+
+They have encountered pretty terrible misconfigurations, including the combination of username \verb+admin+ with password \verb+admin+ and skipping updates. Things seem to go wrong because of a lack of knowledge, (allegedly not due to poor online resources), overwhelming responsibility (allegedly not due to insufficient funding), and using defaults (allegedly not due to unhelpful standards).
+
+They asked operators on whether they think their managers know what they are doing. Non-IT and governmental OPs were more skeptical of their managers than OPs working in IT. As a funny side-note: trust in their own tools seems to be directly correlated with juniority of the operators, which I think makes sense. Moreover, although OPs like blameless post mortems, i.e., allowing people to honestly report their mistakes and not being punished as long as they were not completely careless, they also answered that their companies did not budget for errors.
+
+
+
+
+
+
+
+
+
 
 
 
