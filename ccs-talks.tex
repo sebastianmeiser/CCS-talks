@@ -309,15 +309,22 @@ PASAD works in two phases:\begin{itemize}
 
 This is a nice safeguard, but again has the same limitations that the previous talks on this field had: we don't get any kind of guarantee and it is not completely clear, how difficult it would be to fool the system. Still, I think it is a nice monitor that should make attacks more complicated.
 
+\subsection{On the Safety of IoT Device Physical Interaction Control}
+\noindent\textbf{Speaker: Wenbo Ding (Clemson University)}, collaboration with Hongxin Hu (Clemson University)\\
 
+Unsurprisingly, smart homes are still on the rise; the amount of devices grows fast and they obtain more and more complicated functions. The talk focuses on physical features and their impact on smart devices, e.g., smart windows might influence the smart heater control. The reverse direction is much more fun: If the attacker can hack into the heater, raise the temperature and thus force the temperature control application to open the window, thus allowing an attacker to open a window and thus break into a house, by hacking into the heater. As another example, an app might check the status of some sensor to lock the house if the owner leaves. Consequently, the app might lock or unlock the physical locks of the house, depending on sensor data.
 
+To protect against such angles we first need to identify all physical angles and then their interactions. To this end, they first analyze their applications for intra-app issues and physical channels. From these two features they build an interaction chain and then they analyze the risk of these chains. 
 
+\paragraph{Analysis in more details}
+In their intra-app analysis, they look for flows within the application. They also check which devices might be used and how they can effect each other.  Next they try to identify all physical channels from the description using natural language processing. They parse the sentences into words, extract nouns and then infer channels. I'm not quite sure why they don't analyze the sensors directly.
+%
+They then generate interaction chains to figure out which snippets of interactions can be linked to form larger chains.
+ Finally, they perform a risk analysis; as a base-line they use the intra-app interactions they have previously found (this is why they need them). They assume that intra-app interactions are safe, so they compare their physical interaction chains with the intra-app interaction chains to then classify the former as ``probably safe'' or ``probably not safe''.
+%
+In more details, they actually have a more fine-grained model of the normal behavior: they classify the intra-app chains into several types of chains, e.g., ``temperature related stuff'' and ``movement related stuff''; if the physical interactions fall into the same classes, they are considered fine. If they fall outside of the classes learned on the intra-app interactions, the distance to the nearest class is the ``risk factor'' of these samples.
 
-
-
-
-
-
+Looking at their evaluation, the method seems to leave a lot of room for improvement. It is better than pure random guessing, but not by too much.
 
 \bibliography{adp}
 \bibliographystyle{abbrv}
