@@ -396,6 +396,31 @@ Overall, while these results give us some additional insight into the user exper
 
 
 
+\section{CCS Thursday, Web Security 1 Session}
+\subsection{Predicting Impending Exposure to Malicious Content from User Behavior}
+\noindent\textbf{Speaker: Mahmood Sharif (Carnegie Mellon University)}, collaboration with Jumpei Urakawa (KDDI Research), Nicolas Christin (Carnegie Mellon University), Ayumu Kubota (KDDI Research), Akira Yamada (KDDI Research)
+
+They attempt to preemtively protect uesrs by predicting exposure to malicious pages. Short-term within session prediction can include alerts and prioritizing traffic for expensive analyses, but also straight-out blocking of dangerous content or connections.
+
+\paragraph{Data collection} They collected http requests of 20k customers of KDDI, and asked them in an online survey to assess their security awareness and how they handled security incidents / their security knowledge / their security behavior.
+Finally, they used the Google Safe Browsing blacklist as a ground-truth to see whether users connected to unsafe pages.
+
+The goal then is to observe behavior early in every session to predict whether they will be exposed later in the same session (continuous usage with less than 20 minute pauses in between). Mahmood notices that although only few sessions are dangerous ($0.1\%$), about 11\% of users are exposed at some point. Interestingly, they notice that the usage of dangerous webpages spikes just before these pages are listed on the GSB list. In general, exposed users engage in longer sessions, i.e., there is some correlation between longer usage and exposure. Exposed users request ``certain topics''\footnote{A strong example of this is seeing more ads, which makes sense since they can redirect users to more malicious pages} more often than unexposed users. Exposed users generally tended to be more active from afternoon to midnight and men are twice as likely to get exposed than women. Together with previous points there may be some interpretation here, but Mahmood doesn't go there.\footnote{Nikita Borisov, however, does not share his restraint and when asked about the impact of visiting adult content on exposure, Mahmood confirms the significance of this feature and that they indeed used it in their context.}
+
+Using the features, they train a neural network, e.g., if a user after visiting reddit.com visits streams.xyz and then becomes exposed, their network should learn that if streams are visited after reddit, the user is more likely to be exposed. They show with a nice graph that predicting the future for just a few seconds might be somewhat possible (75\% true positive rate with 20\% false positives, or just above 56\% true positives with 3\% false negatives); if they additionally use context features, their performance improves. There is some evidence that actually many more pages might be malicious than just the GSB list indicates, leading to about 2 true positives for every false positive.
+
+
+
+\subsection{Clock Around the Clock: Time-Based Device Fingerprinting}
+\noindent\textbf{Speaker: Iskander Sanchez-Rola (Deustotech, University of Deusto)}, collaboration with Igor Santos (Deustotech, University of Deusto), Davide Balzarotti (Eurecom)
+
+\paragraph{Motivation} The talk is about device fingerprinting. The use might be malicious (an attacker wants to identify targets), a company that tries to identify machines for enforcement of legal rights. Advertisers moreover track users without storing information on the client side (to track their browsing history) and banks might use tracking to harden their verification process. The aim of the talk is to improve these fingerprinting techniques; this seems like a very attack-oriented talk and it is not clear how to protect against such fingerprinting. 
+
+\paragraph{Using clocks for fingerprinting} The talk tries to improve existing fingerprinting techniques and found that the execution time of certain functions seems to be a good fingerprint. Existing work needs access to clock cycles, requires a sound card with its own internal crystal clock and requires an hour of runtime. They, however, manage to perform fingerprinting using the generic datetime api.
+
+\paragraph{Results} Their evaluation targeting javascript pseudo-random number generation includes computers with the same setup, components and software and they manage to distinguish with 100\% accuracy any one of their 180 computers.
+In another test they used HTML5 CryptoFP stuffs for fingerprinting; they compared 256 identical machines (homogenous setting) as well as 300 participants with their own machines (heterogenous setting). In the homogenous setting they only manage to identify 18\% of computers (which is still better than the 0\% of previous techniques). If they combine CryptoFP with canvas and webgl, they managed to uniquely identify 80\% of machines in the homogenous group.
+
 
 
 
