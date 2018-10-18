@@ -419,11 +419,33 @@ Using the features, they train a neural network, e.g., if a user after visiting 
 \paragraph{Using clocks for fingerprinting} The talk tries to improve existing fingerprinting techniques and found that the execution time of certain functions seems to be a good fingerprint. Existing work needs access to clock cycles, requires a sound card with its own internal crystal clock and requires an hour of runtime. They, however, manage to perform fingerprinting using the generic datetime api.
 
 \paragraph{Results} Their evaluation targeting javascript pseudo-random number generation includes computers with the same setup, components and software and they manage to distinguish with 100\% accuracy any one of their 180 computers.
-In another test they used HTML5 CryptoFP stuffs for fingerprinting; they compared 256 identical machines (homogenous setting) as well as 300 participants with their own machines (heterogenous setting). In the homogenous setting they only manage to identify 18\% of computers (which is still better than the 0\% of previous techniques). If they combine CryptoFP with canvas and webgl, they managed to uniquely identify 80\% of machines in the homogenous group.
+In another test they used HTML5 CryptoFP stuffs for fingerprinting; they compared 256 identical machines (homogeneous setting) as well as 300 participants with their own machines (heterogeneous setting). In the homogeneous setting they only manage to identify 18\% of computers (which is still better than the 0\% of previous techniques). If they combine CryptoFP with canvas and webGL, they managed to uniquely identify 80\% of machines in the homogeneous group.
 
 
 
+\subsection{Web’s Sixth Sense: A Study of Scripts Accessing Smartphone Sensors}
+\noindent\textbf{Speaker: Gunes Acar (Princeton University)}, collaboration with Anupam Das (Carnegie Mellon University), Nikita Borisov (University of Illinois at Urbana-Champaign), Amogh Pradeep (Northeastern University)
 
+\paragraph{Motivation}
+There are lots of sensors available on smartphones, including gyroscopes, light sensors, accelerometers. They are available to any web page without permission. The speaker invites us to visit \url{https://sensor-js.xyz/demo} and promises not to store or use our sensor data.
+
+The goal is to figure out which websites actually access these sites and what the risks exactly are.
+Existing works indicate that key logging, pin recovery, fingerprinting and geolocation is possible. Even recordings can be obtained using non-microphone sensors. In terms of fingerprinting, the slightest differences in physical differences lead to slightly different behavior, allowing phones to be identified.
+
+\paragraph{Evaluation} They checked Alexas top 100k sites and investigated them to find out what exactly they are doing. To this end they used the OpenWPM-mobile crawler that appears like a real mobile browser. For this work, they extended the WPM browser to a mobile browser setting. They measured the data from their real device and made sure their browser matches a real Firefox fingerprint. They also provide some sensor data, i.e., they triggered some sensor events with values extracted from a real phone / mobile browser. This study reveals that many sites (3.6k), including popular news sites, accessed sensors. The most aggressive culprits were add delivery companies. To check whether they obviously used the data, they used easily recognizable values and then checked the URL requests and payloads for these values, finding a few hits.
+
+To figure out why these sensors are accessed, they tried to cluster using (400 binary features per script, e.g., whether certain Javascript API calls were used). They then manually analyzed 3-5 scripts per cluster, which was more difficult since some of the script were obfuscated. According to this analysis, the most common usage non-surprisingly is tracking (fingerprinting, audience recognition), followed by fraud detection. A rare, but noteworthy mention is a crypto script using motion sensor data to improve their random number generator.
+
+\paragraph{Countermeasures}
+\begin{itemize}
+	\item Ad blockers seemed not very useful (2\%-9\% blocking rate)
+	\item Feature policy APIs of browsers that allow to specify which sensors can be accessed are helpful, but not yet widely available.
+	\item W3C specifies that you should not allow access from insecure and cross-origin frames, but not all browsers seemed to follow this recommendation.
+	\item User permissions could be queried or a visual indication that sensors are accessed for high-precision readings, but this might impact usability.
+	\item Safe browsing modes might help here as well.
+\end{itemize}
+
+Overall it is not completely clear how the sensor data is used; fingerprinting might work better if the phones are not moving (e.g., placed on a table), but there certainly are angles.
 
 
 
